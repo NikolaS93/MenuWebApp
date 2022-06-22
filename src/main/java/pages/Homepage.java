@@ -12,13 +12,13 @@ import java.util.List;
 public class Homepage extends BasePage {
 
     public static final By closeButton = By.xpath("//*[@id=\"app\"]/div[3]/div/div/div/div[1]/button/span");
-    //public static final By languageButton = By.id("languageButton");
-    //public static final By languageButton = By.xpath("//*[@id=\"languageButton\"]/span");
-    public static final By languageButton = By.cssSelector("#languageButton");
 
-    public static final By languages = By.className("//*[@id=\"language-modal\"]/form/div[2]");
+    public static final By languageButton = By.id("languageButton");
+    public static final By saveButton = By.xpath("//*[@id=\"language-modal\"]/form/button");
+    public static final By allLanguages = By.xpath("//*[@id=\"language-modal\"]/form/div[2]/*");
+    public static final By englishButton = By.xpath("//*[@id=\"language-modal\"]/form/div[2]/div[3]/button/span/h4");
 
-    public static final By mainFooter = By.xpath("//*[@id=\"main-footer\"]/*");
+
 
     ElementWait elementWait;
 
@@ -29,44 +29,49 @@ public class Homepage extends BasePage {
 
     public void checkModalDialogPresence() {
 
-        try{
             if (driver.findElement(closeButton).isDisplayed()) {
                 elementWait.waitForElementToBeClickable(closeButton);
                 driver.findElement(closeButton).click();
             }
-        }
-        catch (Exception e){
-            System.out.println("Modal dialog not visible" + e);
-        }
     }
 
-    public void checkLanguage(){
+    public void checkLanguage() {
 
-        //TODO click language button
+        String language = driver.findElement(By.tagName("html")).getAttribute("lang");
 
-            String language = driver.findElement(By.tagName("html")).getAttribute("lang");
-            if (!language.equals("en")) {
+        if (language.equals("en")) return;
 
-               elementWait.waitForElementToBeClickable(languageButton);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
 
-//                driver.findElement(languageButton).click();
+        int i = 0;
+        while(!language.equals("en") || i > 3){
+
+            elementWait.waitForElementToBeClickable(languageButton);
+            js.executeScript("document.getElementById('languageButton').click();");
+
+            elementWait.waitForElementToBeClickable(englishButton);
+            driver.findElement(englishButton).click();
+
+            elementWait.waitForElementToBeClickable(saveButton);
+            driver.findElement(saveButton).click();
+
+            language = driver.findElement(By.tagName("html")).getAttribute("lang");
+
+            i= i+1;
+        }
+
+//        List<WebElement> elements;
+//        elements = driver.findElements(allLanguages);
 //
-//                System.out.println(driver.findElements(languages));
-
-//                elementWait.waitForVisibilityOfElement(mainFooter);
+//        for (WebElement element : elements) {
+//            if (element.getText().contains("English")) {
 //
-//                List <WebElement> mainFooterElements;
-//                WebElement languageButton;
+//                System.out.println(element.getText());
 //
-//                mainFooterElements = driver.findElements(mainFooter);
-//
-//                languageButton = mainFooterElements.get(0);
-//                elementWait.waitForVisibilityOfElement(languageButton);
-//                languageButton.click();
+//                element.click();
+//                break;
+//            }
+//        }
 
-                JavascriptExecutor js = (JavascriptExecutor)driver;
-                js.executeScript("arguments[0].click();", languageButton);
-
-            }
     }
 }
