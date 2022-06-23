@@ -46,8 +46,11 @@ public class TestOrdering extends BaseTest {
         order.selectItemFromMenu(item);
         order.increaseQuantity(11);
         order.addOrder();
+<<<<<<< HEAD
         order.verifyOrderValue();
         order.verifyCalculatedVAT();
+=======
+>>>>>>> 0d8c19e86fa06749985df02fd6d298f4a88bf2c1
 
     }
 }
