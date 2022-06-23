@@ -11,7 +11,9 @@ import pages.Order;
 
 public class TestOrdering extends BaseTest {
 
-    public String DeliveryAddress = "Železnička 7, Novi Sad";
+    public String location = "Železnička 7, Novi Sad";
+    public String item = "Quesadilla";
+
 
     public Homepage homepage;
     public Delivery delivery;
@@ -29,22 +31,23 @@ public class TestOrdering extends BaseTest {
     }
 
     @Test
-    public void addDeliveryAddress() throws InterruptedException {
+    public void addDeliveryAddress() {
 
         homepage.checkModalDialogPresence();
-        homepage.checkLanguage();
+        homepage.setLanguageToEng();
 
         delivery.openDelivery();
-        delivery.selectDeliveryAddress(DeliveryAddress);
+        delivery.selectDeliveryAddress(location);
         delivery.clickSaveAddressDeliveryButton();
         delivery.openMoreInfo();
         delivery.VerifySundayOpeningHours();
         delivery.clickCloseMoreInfoButton();
 
-        order.selectItemFromMenu("Quesadilla");
+        order.selectItemFromMenu(item);
         order.increaseQuantity(11);
         order.addOrder();
-
+        order.verifyOrderValue();
+        order.verifyCalculatedVAT();
 
     }
 }

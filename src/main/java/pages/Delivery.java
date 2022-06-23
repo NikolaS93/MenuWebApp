@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
+
 public class Delivery extends BasePage {
 
     public static final By deliveryButton = By.xpath("//*[@id=\"app\"]/div/div[3]/div/div[1]/div/div/div/button[4]");
@@ -65,9 +66,7 @@ public class Delivery extends BasePage {
         driver.findElement(moreInfoButton).click();
     }
 
-    public void VerifySundayOpeningHours() throws InterruptedException {
-
-        Thread.sleep(3000);
+    public void VerifySundayOpeningHours() {
 
         WebElement elementHours = driver.findElement(sundayOpeningHours);
         actions.moveToElement(elementHours);

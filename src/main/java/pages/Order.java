@@ -52,9 +52,7 @@ public class Order extends BasePage{
                 break;
             }
         }
-
         itemPrice = Double.parseDouble(getItemPrice().split(" ")[0]);
-        System.out.println("Item price: "+ itemPrice);
     }
 
     public void increaseQuantity(int quantity){
@@ -74,30 +72,24 @@ public class Order extends BasePage{
         elementWait.waitForElementToBeClickable(addButton);
         driver.findElement(addButton).click();
 
-        //TODO izbaciti u posebne metode:
-
-        verifyOrderValue();
-
-        verifyCalculatedVAT();
     }
 
-    private void verifyOrderValue(){
+    public void verifyOrderValue(){
 
         elementWait.waitForVisibilityOfElement(totalPrice);
-
-        System.out.println("Total Price WEB:" + driver.findElement(totalPrice).getText());
 
         String text = driver.findElement(totalPrice).getText();
 
         totalPriceFromElement = Conversions.convert(text.split(" ")[0]);
 
-        System.out.println("\ntotalPriceFromElementWEB: " + totalPriceFromElement + "\nCalculated: " + (itemPrice * this.quantity + "\n"));
+        System.out.println("\ntotalPriceFromElementWEB: " + totalPriceFromElement + "\nCalculated: " +
+                (itemPrice * this.quantity + "\n"));
 
         assert totalPriceFromElement == itemPrice * this.quantity;
 
     }
 
-    private void verifyCalculatedVAT(){
+    public void verifyCalculatedVAT(){
 
 
         elementWait.waitForVisibilityOfElement(vat);

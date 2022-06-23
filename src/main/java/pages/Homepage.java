@@ -3,11 +3,10 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+
 
 import Utilities.ElementWait;
-import java.util.List;
+
 
 public class Homepage extends BasePage {
 
@@ -19,7 +18,6 @@ public class Homepage extends BasePage {
     public static final By englishButton = By.xpath("//*[@id=\"language-modal\"]/form/div[2]/div[3]/button/span/h4");
 
 
-
     ElementWait elementWait;
 
     public Homepage(WebDriver driver) {
@@ -29,13 +27,18 @@ public class Homepage extends BasePage {
 
     public void checkModalDialogPresence() {
 
+        try {
             if (driver.findElement(closeButton).isDisplayed()) {
                 elementWait.waitForElementToBeClickable(closeButton);
                 driver.findElement(closeButton).click();
             }
+        }
+        catch (Exception e){
+            System.out.println("ModalDialog not found" + e);
+        }
     }
 
-    public void checkLanguage() {
+    public void setLanguageToEng() {
 
         String language = driver.findElement(By.tagName("html")).getAttribute("lang");
 
@@ -59,19 +62,5 @@ public class Homepage extends BasePage {
 
             i= i+1;
         }
-
-//        List<WebElement> elements;
-//        elements = driver.findElements(allLanguages);
-//
-//        for (WebElement element : elements) {
-//            if (element.getText().contains("English")) {
-//
-//                System.out.println(element.getText());
-//
-//                element.click();
-//                break;
-//            }
-//        }
-
     }
 }
