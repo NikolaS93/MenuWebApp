@@ -45,6 +45,5 @@ public class TestOrdering extends BaseTest {
         order.increaseQuantity(11);
         order.addOrder();
 
-
     }
 }
